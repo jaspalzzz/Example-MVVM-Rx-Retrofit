@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">MVVM-Retrofit</string>
+    <string name="project_name">Project Name</string>
+    <string name="project_language">Project Language </string>
+    <string name="project_watchers">Project Watchers </string>
+    <string name="languages">Languages: %s</string>
+    <string name="watchers">Watchers: %s</string>
+    <string name="project_list">Project List</string>
+</resources>
