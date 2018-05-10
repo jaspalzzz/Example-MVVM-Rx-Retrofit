@@ -13,7 +13,7 @@ import retrofit2.http.Path;
 
 public interface ApiService {
     @GET("users/{user}/repos")
-    Call<List<Project>> getProjectList(@Path("user") String user);
+    Single<List<Project>> getProjectList(@Path("user") String user);
 
     @GET("/repos/{user}/{reponame}")
     Single<Project> getProjectDetails(@Path("user") String user, @Path("reponame") String projectName);
