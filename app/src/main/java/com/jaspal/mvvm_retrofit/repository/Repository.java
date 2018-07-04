@@ -3,9 +3,12 @@ package com.jaspal.mvvm_retrofit.repository;
 import android.arch.lifecycle.MutableLiveData;
 
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
+import com.jaspal.mvvm_retrofit.JApplication;
 import com.jaspal.mvvm_retrofit.models.Project;
 
 import java.util.List;
+
+import javax.inject.Inject;
 
 import io.reactivex.SingleObserver;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -17,31 +20,13 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Repository {
-    public String BASE_URL = "http://api.github.com/";
-    private ApiService apiService;
-    private static Repository instance;
-
-    private Repository() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build();
-        apiService = retrofit.create(ApiService.class);
+    @Inject ApiService apiService;
+    public Repository() {
+        JApplication.getInstance().getNetComponent().inject(Repository.this);
     }
-
-    public synchronized static Repository getInstance() {
-        if (instance == null) {
-            if (instance == null) {
-                instance = new Repository();
-            }
-        }
-        return instance;
-    }
-
-    public MutableLiveData<APIResponse> getProjectList(CompositeDisposable compositeDisposable, String user)
+    public MutableLiveData<APIResponse<List<Project>>> getProjectList(CompositeDisposable compositeDisposable, String user)
     {
-        final MutableLiveData<APIResponse> projectListResponse=new MutableLiveData<>();
+        final MutableLiveData<APIResponse<List<Project>>> projectListResponse=new MutableLiveData<>();
         apiService.getProjectList(user)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -1,4 +1,4 @@
-package com.jaspal.mvvm_retrofit.views.ui;
+package com.jaspal.mvvm_retrofit.views.ui.base;
 
 import android.arch.lifecycle.ViewModel;
 import android.databinding.DataBindingUtil;

@@ -4,15 +4,15 @@ import com.jaspal.mvvm_retrofit.models.Project;
 
 import java.util.List;
 
-public class APIResponse {
+public class APIResponse<T> {
 
     StatusEnum statusEnum;
-    List<Project> response;
+    T response;
     Throwable error;
 
     public APIResponse(){}
 
-    public APIResponse(StatusEnum statusEnum,List<Project> response, Throwable error) {
+    public APIResponse(StatusEnum statusEnum,T response, Throwable error) {
         this.response = response;
         this.error = error;
         this.statusEnum=statusEnum;
@@ -33,7 +33,7 @@ public class APIResponse {
         return new APIResponse(StatusEnum.ERROR,null,error);
     }
 
-    public List<Project> getResponse() {
+    public T getResponse() {
         return response;
     }
 

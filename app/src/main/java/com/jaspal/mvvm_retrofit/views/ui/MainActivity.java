@@ -1,4 +1,4 @@
-package com.jaspal.mvvm_retrofit.views;
+package com.jaspal.mvvm_retrofit.views.ui;
 
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
@@ -10,10 +10,9 @@ import com.jaspal.mvvm_retrofit.R;
 import com.jaspal.mvvm_retrofit.databinding.ActivityMainBinding;
 import com.jaspal.mvvm_retrofit.models.Project;
 import com.jaspal.mvvm_retrofit.repository.APIResponse;
-import com.jaspal.mvvm_retrofit.repository.StatusEnum;
 import com.jaspal.mvvm_retrofit.viewmodels.MainViewModel;
 import com.jaspal.mvvm_retrofit.views.adapter.ProjectAdapter;
-import com.jaspal.mvvm_retrofit.views.ui.BaseActivity;
+import com.jaspal.mvvm_retrofit.views.ui.base.BaseActivity;
 
 import java.util.List;
 
@@ -35,12 +34,10 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
     }
 
     public void inflateProjectList() {
-        binding.setSetloading(true);
-        viewModel.getProjectList("jaspalzzz").observe(MainActivity.this, new Observer<APIResponse>() {
+        viewModel.getProjectList("jaspalzzz").observe(MainActivity.this, new Observer<APIResponse<List<Project>>>() {
             @Override
-            public void onChanged(@Nullable APIResponse APIResponse) {
-                binding.setSetloading(false);
-                handleProjectList(APIResponse);
+            public void onChanged(@Nullable APIResponse<List<Project>> response) {
+                handleProjectList(response);
             }
         });
     }
@@ -53,15 +50,11 @@ public class MainActivity extends BaseActivity<ActivityMainBinding, MainViewMode
                 break;
             case SUCCESS:
                 binding.setSetloading(false);
-                adapter.setData(response.getResponse());
+                adapter.setData((List<Project>) response.getResponse());
                 break;
             case LOADING:
                 binding.setSetloading(true);
                 break;
         }
     }
-
-   /* private void handleProjectList(List<Project> response) {
-            adapter.setData(response);
-    }*/
 }
